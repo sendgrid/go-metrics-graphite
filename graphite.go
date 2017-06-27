@@ -68,6 +68,7 @@ func graphite(c *Config) error {
 		switch metric := i.(type) {
 		case metrics.Counter:
 			count := metric.Count()
+			metric.Clear()
 			fmt.Fprintf(w, "%s.%s.count %d %d\n", c.Prefix, name, count, now)
 			fmt.Fprintf(w, "%s.%s.count_ps %.2f %d\n", c.Prefix, name, float64(count)/flushSeconds, now)
 		case metrics.Gauge:
